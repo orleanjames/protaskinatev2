@@ -13,7 +13,7 @@ export default function GuidePage() {
       title: '2. Add Tasks to a Group',
       summary: 'Assign tasks inside specific folders.',
       details: 'Click on any task group card to open its folder view, type your task in the input field, and click "+ Add Task".',
-      actionLink: '/groups',
+      actionLink: '/groups/groupsid',
     },
     {
       title: '3. Mark Tasks as Done / Not Done',
