@@ -22,9 +22,9 @@ export default function GuidePage() {
       actionLink: '/home',
     },
     {
-      title: '4. Delete a Task',
+      title: '4. Edit or Delete a Task',
       summary: 'Remove unwanted items.',
-      details: 'Click the Delete button on the right side of any task card to instantly remove it from your list.',
+      details: 'Click the 3 dots button on the right side of any task card and choose from the two options.',
       actionLink: '/home',
     },
     {
