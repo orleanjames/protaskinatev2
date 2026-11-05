@@ -3,96 +3,129 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 export default function DevelopersPage() {
-  const [apiUser, setApiUser] = useState(null);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Team members list
-  const developers = [
-    { name: 'Orlean Sarmiento', role: 'Lead Frontend Developer' },
-    { name: 'John Paul Kenneth Banda', role: 'State Management Specialist' },
-    { name: 'Alejandro D. Sayo', role: 'UI/UX & Tailwind Engineer' },
-    { name: 'Tristan Castaneda', role: 'API Integration Specialist' },
-  ];
-
   useEffect(() => {
-    // Fetching user information from DummyJSON API using Axios
-    axios.get('https://dummyjson.com/users/144')
+    axios.get('https://dummyjson.com/users?limit=6')
       .then((res) => {
-        setApiUser(res.data);
+        setUsers(res.data.users);
         setLoading(false);
       })
-      .catch((err) => {
-        setError('Failed to retrieve user information from the DummyJSON API.');
+      .catch(() => {
+        setError('Failed to fetch user profiles from DummyJSON API.');
         setLoading(false);
       });
   }, []);
 
   return (
-    <div className="space-y-8 max-w-2xl">
+    <div className="space-y-8 max-w-5xl mx-auto pb-10">
       <div>
         <h1 className="text-2xl font-black text-slate-800">Developers</h1>
-        <p className="text-sm text-slate-500 mt-1">Meet the creators.</p>
+        <p className="text-sm text-slate-500 mt-1">Meet the project creators.</p>
       </div>
 
-      {/* Displaying user info retrieved from DummyJSON API using Axios */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-        <h2 className="text-base font-bold text-slate-800">Retrieved User Information (DummyJSON API)</h2>
+      {/* 1. Project Creators List */}
+      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <h2 className="text-lg font-bold text-slate-800">Project Creators</h2>
+        
+        <div className="divide-y divide-slate-100">
+          <div className="py-3 flex items-center justify-between first:pt-0 last:pb-0">
+            <div className="flex items-center gap-3">
+              <div>
+                <h3 className="text-sm font-bold text-slate-800">Alejandro Sayo</h3>
+              </div>
+            </div>
+            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-md">
+              Developer
+            </span>
+          </div>
+
+          <div className="py-3 flex items-center justify-between first:pt-0 last:pb-0">
+            <div className="flex items-center gap-3">
+              <div>
+                <h3 className="text-sm font-bold text-slate-800">Paul Banda</h3>
+              </div>
+            </div>
+            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-md">
+              Developer
+            </span>
+          </div>
+
+          <div className="py-3 flex items-center justify-between first:pt-0 last:pb-0">
+            <div className="flex items-center gap-3">
+              <div>
+                <h3 className="text-sm font-bold text-slate-800">Tristan Castaneda</h3>
+              </div>
+            </div>
+            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-md">
+              Developer
+            </span>
+          </div>
+
+          <div className="py-3 flex items-center justify-between first:pt-0 last:pb-0">
+            <div className="flex items-center gap-3">
+              <div>
+                <h3 className="text-sm font-bold text-slate-800">Orlean Sarmiento</h3>
+              </div>
+            </div>
+            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-md">
+              Developer
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Sample Users Fetched from DummyJSON API */}
+      <div className="space-y-4">
+        <div>
+          <h2 className="text-lg font-bold text-slate-800">Retrieved User Information</h2>
+          <p className="text-xs text-slate-400">Sample user list retrieved from DummyJSON using Axios.</p>
+        </div>
 
         {loading && (
-          <div className="text-xs font-bold text-emerald-600 animate-pulse py-4 text-center">
-            Loading user information from API...
+          <div className="bg-white p-10 text-center rounded-2xl border border-slate-200 shadow-sm space-y-3">
+            <div className="w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p className="text-xs font-bold text-emerald-600">Retrieving users from API...</p>
           </div>
         )}
 
         {error && (
-          <div className="text-xs font-bold text-red-500 py-4 text-center">
-            {error}
+          <div className="bg-red-50 border border-red-200 p-6 rounded-2xl text-center">
+            <p className="text-sm font-bold text-red-600">{error}</p>
           </div>
         )}
 
-        {!loading && !error && apiUser && (
-          <div className="flex items-center gap-5 p-4 bg-slate-50 rounded-xl border border-slate-100">
-            {/* Profile Picture */}
-            <img 
-              src={apiUser.image} 
-              alt={apiUser.username} 
-              className="w-16 h-16 rounded-full border-2 border-emerald-500 bg-white object-cover" 
-            />
-            <div className="space-y-1 text-sm">
-              {/* Full Name */}
-              <div className="font-bold text-slate-800 text-base">
-                {apiUser.firstName} {apiUser.lastName}
+        {!loading && !error && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {users.map((user) => (
+              <div key={user.id} className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3 flex flex-col justify-between hover:border-emerald-500 transition">
+                <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
+                  <img
+                    src={user.image}
+                    alt={`${user.firstName} ${user.lastName}`}
+                    className="w-12 h-12 rounded-full border-2 border-emerald-500 bg-slate-50 object-cover flex-shrink-0"
+                  />
+                  <div className="min-w-0">
+                    <h3 className="text-sm font-bold text-slate-800 truncate">
+                      {user.firstName} {user.lastName}
+                    </h3>
+                    <p className="text-xs text-slate-400 truncate">@{user.username}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-1 text-xs text-slate-600">
+                  <div className="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                    <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 block">Email</span>
+                    <span className="font-medium truncate block">{user.email}</span>
+                  </div>
+                </div>
               </div>
-              {/* Username */}
-              <div className="text-xs text-slate-500">
-                <strong>Username:</strong> {apiUser.username}
-              </div>
-              {/* Email Address */}
-              <div className="text-xs text-slate-500">
-                <strong>Email:</strong> {apiUser.email}
-              </div>
-            </div>
+            ))}
           </div>
         )}
       </div>
-
-      {/* Team Members List */}
-      <div className="space-y-3">
-        <h2 className="text-base font-bold text-slate-800">Project Creators</h2>
-        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm divide-y divide-slate-100 overflow-hidden">
-          {developers.map((dev, index) => (
-            <div key={index} className="p-5 flex items-center justify-between">
-              <span className="text-sm font-bold text-slate-800">{dev.name}</span>
-              <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
-                {dev.role}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-
     </div>
   );
 }

@@ -39,7 +39,7 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    axios.get('https://dummyjson.com/users/1')
+    axios.get('https://dummyjson.com/users/122')
       .then((res) => {
         setApiUser(res.data);
         setLoading(false);

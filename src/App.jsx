@@ -6,6 +6,7 @@ import GroupsPage from './pages/GroupsPage';
 import TaskListPage from './pages/TaskListPage';
 import GuidePage from './pages/GuidePage';
 import DevelopersPage from './pages/DevelopersPage';
+import UserInfoPage from './pages/UserInfoPage';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
             <Route path="/groups" element={<GroupsPage />} />
             <Route path="/groups/:groupId" element={<TaskListPage />} />
             <Route path="/guide" element={<GuidePage />} />
+            <Route path="/user" element={<UserInfoPage />}/>
             <Route path="/developers" element={<DevelopersPage />} />
           </Routes>
         </main>

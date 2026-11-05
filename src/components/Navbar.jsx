@@ -6,6 +6,7 @@ export default function Navbar() {
     { path: '/home', label: 'Dashboard' },
     { path: '/groups', label: 'Task Groups' },
     { path: '/guide', label: 'User Guide' },
+    { path: '/user', label: 'Users'},
     { path: '/developers', label: 'Developers' },
   ];
 
