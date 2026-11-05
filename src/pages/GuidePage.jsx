@@ -18,11 +18,11 @@ export default function GuidePage() {
     {
       title: '3. Mark Tasks as Done / Not Done',
       summary: 'Toggle task completion status.',
-      details: 'Click the circular checkmark button next to any task to cross it out as completed or toggle it back to active.',
+      details: 'Click the Done/Undone button next to any task to cross it out as completed or toggle it back to active.',
       actionLink: '/home',
     },
     {
-      title: '4. Edit or Delete a Task',
+      title: '4. Edit or Delete a Task or Group Task',
       summary: 'Edit or remove task.',
       details: 'Click the 3 dots button on the right side of any task card and choose from the two options.',
       actionLink: '/groups',

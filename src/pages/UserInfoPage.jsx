@@ -9,7 +9,7 @@ export default function UserInfoPage() {
 
   useEffect(() => {
     // Fetch a list of sample users from DummyJSON API using Axios
-    axios.get('https://dummyjson.com/users?limit=20')
+    axios.get('https://dummyjson.com/users?limit=100')
       .then((res) => {
         setUsers(res.data.users);
         setLoading(false);
@@ -27,9 +27,6 @@ export default function UserInfoPage() {
           <h1 className="text-2xl font-black text-slate-800">User Information</h1>
           <p className="text-sm text-slate-500 mt-1">Sample users fetched from DummyJSON API using Axios.</p>
         </div>
-        <Link to="/home" className="text-xs font-bold text-emerald-600 hover:underline">
-          ← Back to Dashboard
-        </Link>
       </div>
 
       {loading && (

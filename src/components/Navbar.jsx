@@ -16,7 +16,7 @@ export default function Navbar() {
         <span className="text-2xl">📋</span>
         <span className="font-black text-xl text-emerald-700 tracking-tight">ProTASKinate</span>
       </div>
-      <nav className="flex flex-wrap items-center gap-2">
+      <nav className="flex items-center gap-1 sm:gap-1 overflow-x-auto py-2">
         {navs.map((n) => (
           <NavLink
             key={n.path}
