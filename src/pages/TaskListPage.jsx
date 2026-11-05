@@ -51,12 +51,12 @@ export default function TaskListPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
       <div>
         <Link to="/groups" className="text-xs font-bold text-emerald-600 hover:underline">← Back to Task Groups</Link>
         <div className="flex items-center justify-between mt-2">
-          <h1 className="text-2xl font-black text-slate-800">{currentGroup ? currentGroup.name : 'Group Tasks'}</h1>
-          <span className="text-xs font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full">{groupTasks.length} tasks</span>
+          <h1 className="text-2xl font-black text-slate-800 truncate pr-4">{currentGroup ? currentGroup.name : 'Group Tasks'}</h1>
+          <span className="text-xs font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full flex-shrink-0">{groupTasks.length} tasks</span>
         </div>
       </div>
 
@@ -83,25 +83,27 @@ export default function TaskListPage() {
           <div className="bg-white p-8 text-center rounded-2xl border border-slate-200 text-slate-400 text-sm">No tasks in this group yet.</div>
         ) : (
           groupTasks.map((task) => (
-            <div key={task.id} className="relative flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
-              <div className="flex items-center gap-3">
+            <div key={task.id} className="relative flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl shadow-sm gap-4">
+              <div className="flex items-center gap-3 min-w-0 flex-1">
                 <button
                   onClick={() => toggleTask(task.id)}
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition ${
-                    task.completed ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-slate-300'
+                  className={`w-20 py-1 rounded-lg text-xs font-bold text-center transition flex-shrink-0 ${
+                    task.completed 
+                      ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200' 
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
-                  {task.completed && '✓'}
+                  {task.completed ? 'Done' : 'Undone'}
                 </button>
-                <div>
-                  <span className={`text-sm font-semibold block ${task.completed ? 'line-through text-slate-400' : 'text-slate-800'}`}>
+                <div className="min-w-0 flex-1">
+                  <span className={`text-sm font-semibold block truncate ${task.completed ? 'line-through text-slate-400' : 'text-slate-800'}`}>
                     {task.title}
                   </span>
-                  {task.description && <span className="text-xs text-slate-500 block">{task.description}</span>}
+                  {task.description && <span className="text-xs text-slate-500 block truncate">{task.description}</span>}
                 </div>
               </div>
 
-              <div className="relative" ref={activeMenuId === task.id ? menuRef : null}>
+              <div className="relative flex-shrink-0" ref={activeMenuId === task.id ? menuRef : null}>
                 <button
                   onClick={() => setActiveMenuId(activeMenuId === task.id ? null : task.id)}
                   className="p-2 text-slate-400 hover:text-slate-600 font-bold tracking-widest text-lg"
@@ -137,7 +139,7 @@ export default function TaskListPage() {
         )}
       </div>
 
-      {/* Edit Modal using Portal */}
+      {/* Edit Modal */}
       {editingTask && ReactDOM.createPortal(
         <div className="fixed inset-0 w-screen h-screen bg-slate-900/60 flex items-center justify-center z-[99999] p-4 m-0">
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5 relative">
@@ -182,10 +184,10 @@ export default function TaskListPage() {
               </div>
 
               <div className="flex items-center justify-end gap-3 pt-2">
-                <button type="button" onClick={() => setEditingTask(null)} className="px-5 py-2.5 text-slate-600 hover:text-slate-800 font-bold text-xs">
+                <button type="button" onClick={() => setEditingTask(null)} className="px-4 py-2 text-sm font-semibold text-slate-500 hover:bg-slate-100 rounded-xl transition">
                   Cancel
                 </button>
-                <button type="submit" className="px-6 py-2.5 bg-[#00A86B] hover:bg-[#008F5A] text-white font-bold text-xs rounded-xl shadow-sm transition">
+                <button type="submit" className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-sm transition">
                   Save Task
                 </button>
               </div>
@@ -195,7 +197,7 @@ export default function TaskListPage() {
         document.body
       )}
 
-      {/* Delete Confirmation Modal using Portal */}
+      {/* Delete Confirmation Modal */}
       {deletingTaskId && ReactDOM.createPortal(
         <div className="fixed inset-0 w-screen h-screen bg-slate-900/60 flex items-center justify-center z-[99999] p-4 m-0">
           <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4 text-center">

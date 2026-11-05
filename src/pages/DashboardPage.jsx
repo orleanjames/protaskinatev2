@@ -39,7 +39,7 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    axios.get('https://dummyjson.com/users/122')
+    axios.get('https://dummyjson.com/users/100')
       .then((res) => {
         setApiUser(res.data);
         setLoading(false);
@@ -88,7 +88,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto">
+    <div className="space-y-6 max-w-4xl mx-auto relative">
       {/* Welcome Banner */}
       <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
         <div>
@@ -154,7 +154,7 @@ export default function DashboardPage() {
                   errorMsg && !selectedGroupOption ? 'border-red-500 ring-red-500/20' : 'border-slate-200 focus:ring-emerald-500'
                 }`}
               >
-                <option value="">Select Group *</option>
+                <option value="">-- Select Group (Required) * --</option>
                 {groups.map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}
                 <option value="CREATE_NEW" className="font-bold text-emerald-700">+ Create new group...</option>
               </select>
@@ -186,32 +186,35 @@ export default function DashboardPage() {
             tasks.map((task) => {
               const groupObj = groups.find((g) => g.id === task.groupId);
               return (
-                <div key={task.id} className="relative flex items-center justify-between p-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
-                  <div className="flex items-center gap-3">
+                <div key={task.id} className="relative flex items-center justify-between p-4 bg-white border border-slate-200 rounded-2xl shadow-sm gap-4">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
                     <button
                       onClick={() => toggleTask(task.id)}
-                      className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition ${
-                        task.completed ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-slate-300'
+                      className={`w-20 py-1 rounded-lg text-xs font-bold text-center transition flex-shrink-0 ${
+                        task.completed 
+                          ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200' 
+                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                       }`}
                     >
-                      {task.completed && '✓'}
+                      {task.completed ? 'Done' : 'Undone'}
                     </button>
-                    <div>
-                      <span className={`text-sm font-bold block ${task.completed ? 'line-through text-slate-400' : 'text-slate-800'}`}>
+                    <div className="min-w-0 flex-1">
+                      <span className={`text-sm font-bold block truncate ${task.completed ? 'line-through text-slate-400' : 'text-slate-800'}`}>
                         {task.title}
                       </span>
                       {task.description && (
-                        <span className="text-xs text-slate-500 block">{task.description}</span>
+                        <span className="text-xs text-slate-500 block truncate">{task.description}</span>
                       )}
                       {groupObj && (
-                        <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md mt-1 inline-block">
+                        <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md mt-1 inline-block truncate max-w-full">
                           {groupObj.name}
                         </span>
                       )}
                     </div>
                   </div>
 
-                  <div className="relative" ref={activeMenuId === task.id ? menuRef : null}>
+                  {/* 3 Dots Menu Button */}
+                  <div className="relative flex-shrink-0" ref={activeMenuId === task.id ? menuRef : null}>
                     <button
                       onClick={() => setActiveMenuId(activeMenuId === task.id ? null : task.id)}
                       className="p-2 text-slate-400 hover:text-slate-600 font-bold tracking-widest text-lg"
@@ -249,7 +252,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Edit Modal using Portal */}
+      {/* Edit Modal */}
       {editingTask && ReactDOM.createPortal(
         <div className="fixed inset-0 w-screen h-screen bg-slate-900/60 flex items-center justify-center z-[99999] p-4 m-0">
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5 relative">
@@ -302,13 +305,13 @@ export default function DashboardPage() {
                 <button 
                   type="button" 
                   onClick={() => setEditingTask(null)} 
-                  className="px-5 py-2.5 text-slate-600 hover:text-slate-800 font-bold text-xs"
+                  className="px-4 py-2 text-sm font-semibold text-slate-500 hover:bg-slate-100 rounded-xl transition"
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit" 
-                  className="px-6 py-2.5 bg-[#00A86B] hover:bg-[#008F5A] text-white font-bold text-xs rounded-xl shadow-sm transition"
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-sm transition"
                 >
                   Save Task
                 </button>
@@ -319,7 +322,7 @@ export default function DashboardPage() {
         document.body
       )}
 
-      {/* Delete Confirmation Modal using Portal */}
+      {/* Delete Confirmation Modal */}
       {deletingTaskId && ReactDOM.createPortal(
         <div className="fixed inset-0 w-screen h-screen bg-slate-900/60 flex items-center justify-center z-[99999] p-4 m-0">
           <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4 text-center">

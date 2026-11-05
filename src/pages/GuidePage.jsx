@@ -13,7 +13,7 @@ export default function GuidePage() {
       title: '2. Add Tasks to a Group',
       summary: 'Assign tasks inside specific folders.',
       details: 'Click on any task group card to open its folder view, type your task in the input field, and click "+ Add Task".',
-      actionLink: '/groups/groupsid',
+      actionLink: '/groups',
     },
     {
       title: '3. Mark Tasks as Done / Not Done',
@@ -25,13 +25,13 @@ export default function GuidePage() {
       title: '4. Edit or Delete a Task',
       summary: 'Edit or remove task.',
       details: 'Click the 3 dots button on the right side of any task card and choose from the two options.',
-      actionLink: '/home',
+      actionLink: '/groups',
     },
     {
       title: '5. Page & Route Navigation',
       summary: 'Seamless client-side routing.',
       details: 'Powered by React Router DOM, click any link in the top navigation bar to switch between views instantly without reloading the page.',
-      actionLink: '/developers',
+      actionLink: '/home',
     },
     {
       title: '6. External API Integration (Axios & DummyJSON)',

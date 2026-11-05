@@ -44,7 +44,7 @@ export default function GroupsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
       <div>
         <h1 className="text-2xl font-black text-slate-800">Task Groups</h1>
         <p className="text-sm text-slate-500 mt-1">Create a group task here!</p>
@@ -75,13 +75,13 @@ export default function GroupsPage() {
             <div
               key={group.id}
               onClick={() => navigate(`/groups/${group.id}`)}
-              className="bg-white border border-slate-200 hover:border-emerald-500 rounded-2xl p-5 shadow-sm cursor-pointer transition flex items-center justify-between"
+              className="bg-white border border-slate-200 hover:border-emerald-500 rounded-2xl p-5 shadow-sm cursor-pointer transition flex items-center justify-between gap-4"
             >
-              <div>
-                <h2 className="text-lg font-bold text-slate-800">{group.name}</h2>
+              <div className="min-w-0 flex-1">
+                <h2 className="text-lg font-bold text-slate-800 truncate">{group.name}</h2>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-shrink-0">
                 <span className="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl">{count} tasks</span>
                 
                 <div className="relative" ref={activeMenuId === group.id ? menuRef : null} onClick={(e) => e.stopPropagation()}>
@@ -115,7 +115,7 @@ export default function GroupsPage() {
         })}
       </div>
 
-      {/* Rename Group Modal using Portal */}
+      {/* Rename Group Modal */}
       {editingGroup && ReactDOM.createPortal(
         <div className="fixed inset-0 w-screen h-screen bg-slate-900/60 flex items-center justify-center z-[99999] p-4 m-0" onClick={(e) => e.stopPropagation()}>
           <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl p-6 space-y-4">
@@ -149,7 +149,7 @@ export default function GroupsPage() {
         document.body
       )}
 
-      {/* Delete Confirmation Modal using Portal */}
+      {/* Delete Confirmation Modal */}
       {deletingGroupId && ReactDOM.createPortal(
         <div className="fixed inset-0 w-screen h-screen bg-slate-900/60 flex items-center justify-center z-[99999] p-4 m-0" onClick={(e) => e.stopPropagation()}>
           <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4 text-center">

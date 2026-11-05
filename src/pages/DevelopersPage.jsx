@@ -8,7 +8,7 @@ export default function DevelopersPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('https://dummyjson.com/users?limit=6')
+    axios.get('https://dummyjson.com/users?limit=100')
       .then((res) => {
         setUsers(res.data.users);
         setLoading(false);
