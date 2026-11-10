@@ -8,7 +8,6 @@ export default function UserInfoPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch a list of sample users from DummyJSON API using Axios
     axios.get('https://dummyjson.com/users?limit=100')
       .then((res) => {
         setUsers(res.data.users);
